@@ -29,7 +29,6 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
             _resultsPage = resultsPage;
         }
 
-
         public void StartApplication()
         {
             // Begin Application
@@ -42,15 +41,13 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
             int partySize = Application_GetPartySizeFromUser();
 
             // Get min and max budgets
-            Console.WriteLine("Now, we need to talk money!");
-            Console.WriteLine("\n");
             Budget userBudget = Application_GetBudgetFromUser();
 
             // Determine which holidays are suitable!
             List<Destination> filteredDestinations = Application_FilterDestinations(destinations, partySize, userBudget);
 
             // Display results!
-            Application_DisplayResults(filteredDestinations, destinations);
+            Application_DisplayResults(filteredDestinations, destinations, userBudget);
 
             //Return to start of application
             StartApplication();
@@ -84,38 +81,14 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
 
         private Budget Application_GetBudgetFromUser()
         {
-            Budget userBudget = new Budget();
+            Console.WriteLine("Now, we need to talk money!");
+            Console.WriteLine("\n");
 
-            userBudget.StringMinimumBudget = _budgetPage.Budget_FindBudget("minimum");
-            Application_ValidateUserInput(userBudget.StringMinimumBudget);
-            userBudget.MinimumBudget = _budgetPage.Budget_ConvertValueToInt(userBudget.StringMinimumBudget);
-
-            _shared.Shared_Divider();
-
-            userBudget.StringMaximumBudget = _budgetPage.Budget_FindBudget("maximum");
-            Application_ValidateUserInput(userBudget.StringMaximumBudget);
-            userBudget.MaximumBudget = _budgetPage.Budget_ConvertValueToInt(userBudget.StringMaximumBudget);
-
-            try
-            { 
-                _budgetPage.Budget_CheckMinAmountLessThanMaxAmount(userBudget);
-            }
-            catch
-            {
-                Application_GetBudgetFromUser();
-            }
-
-            return userBudget;
+            Budget newBudget = _budgetPage.GetBudgetFromUser();
+            return newBudget;
         }
 
-        private void Application_ValidateUserInput(string userInput)
-        {
-            bool isInputValid = _budgetPage.Budget_ValidateUserInput(userInput);
-            if (isInputValid == false)
-            {
-                Application_GetBudgetFromUser();
-            }
-        }
+
 
         private List<Destination> Application_FilterDestinations(List<Destination> destinations, int partySize,
             Budget budget)
@@ -126,10 +99,10 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
             return filteredDestinations;
         }
 
-        private void Application_DisplayResults(List<Destination> filteredDestinations, List<Destination> originalDestinations)
+        private void Application_DisplayResults(List<Destination> filteredDestinations, List<Destination> originalDestinations, Budget budget)
         {
             var resultsReturned = _resultsPage.ResultsPage_CheckResultsList(filteredDestinations);
-            if (resultsReturned == true)
+            if (resultsReturned && (budget.MinimumBudget != 0 && budget.MaximumBudget != 0))
             {
                 _resultsPage.ResultsPage_DisplayResults(filteredDestinations);
             }
