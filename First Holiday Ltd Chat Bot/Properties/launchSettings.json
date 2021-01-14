@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "First Holiday Ltd Chat Bot": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\ben.carter\\Desktop\\Synoptic Project Practice 1\\First Holiday Ltd Chat Bot\\First Holiday Ltd Chat Bot\\bin\\Debug\\netcoreapp3.1\\First Holiday Ltd Chat Bot.exe",
+      "remoteDebugEnabled": false
+    }
+  }
+}
