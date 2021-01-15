@@ -26,6 +26,7 @@ namespace First_Holiday_Ltd_Chat_Bot.Repository
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
+
                 while (reader.Read())
                 {
                     Destination destination = new Destination();

@@ -9,6 +9,7 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic.Pages
         public List<Destination> DestinationFilter_FilterBySuitability(List<Destination> destinations, int partySize, Budget budget)
         {
             List<Destination> filteredBySizeDestinations = DestinationFilter_FilterByPartySize(partySize, destinations);
+
             List<Destination> finalFilteredList =
                 DestinationFilter_FilterListByCost(filteredBySizeDestinations, budget.MinimumBudget, budget.MaximumBudget);
 

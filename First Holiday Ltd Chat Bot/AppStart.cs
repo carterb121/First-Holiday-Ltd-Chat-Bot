@@ -15,7 +15,7 @@ namespace First_Holiday_Ltd_Chat_Bot
             IWelcomePage welcome = new WelcomePage();
             IHolidayType holidayType = new HolidayTypePage(destinationRepository, shared);
             IPartyNumberPage partyNumber = new PartyNumberPage(shared);
-            IBudgetPage budgetPage = new BudgetPage();
+            IBudgetPage budgetPage = new BudgetPage(shared);
             IDestinationFilter destinationFilter = new DestinationFilter();
             IResultsPage resultsPage = new ResultsPage(shared);
 

@@ -19,18 +19,20 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
             Console.WriteLine("\n");
 
             string userInput = Console.ReadLine();
-            if (userInput.Trim().Equals("1"))
+            Console.WriteLine("\n");
+
+            switch (userInput.Trim())
             {
-                return;
-            }
-            else if (userInput.Trim().Equals("2"))
-            {
-                Shared_QuitApplication();
-            }
-            else
-            {
-                Console.WriteLine("I'm sorry, I don't understand your response!");
-                Shared_StartSearchOrQuit();
+                case "1":
+                    return;
+                case "2":
+                    Shared_QuitApplication();
+                    break;
+                default:
+                    Console.WriteLine("I'm sorry, I don't understand your response!");
+                    Shared_Divider();
+                    Shared_StartSearchOrQuit();
+                    break;
             }
         }
 

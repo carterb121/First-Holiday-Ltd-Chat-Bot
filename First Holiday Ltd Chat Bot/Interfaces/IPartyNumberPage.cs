@@ -1,5 +1,4 @@
-﻿
-namespace First_Holiday_Ltd_Chat_Bot.Interfaces
+﻿namespace First_Holiday_Ltd_Chat_Bot.Interfaces
 {
     public interface IPartyNumberPage
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using First_Holiday_Ltd_Chat_Bot.dto;
 using First_Holiday_Ltd_Chat_Bot.Interfaces;
 
@@ -19,8 +20,21 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
 
         public List<Destination> HolidayType_ReturnDestinations()
         {
+            string userInput;
             List<Destination> returnedDestinations = new List<Destination>();
-            string userInput = HolidayType_GetUserInput();
+            try
+            {
+                userInput = HolidayType_GetUserInput();
+            }
+            catch
+            {
+                _shared.Shared_Divider();
+                Console.WriteLine("I'm sorry, that is not a valid holiday type");
+                _shared.Shared_Divider();
+
+                Thread.Sleep(2000);
+                return returnedDestinations;
+            }
 
             returnedDestinations = GetDestinationsByType(returnedDestinations, userInput);
 
@@ -29,13 +43,10 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
 
         private string HolidayType_GetUserInput()
         {
-            Console.WriteLine("First things first, what kind of holiday are you looking for?");
-            Console.WriteLine("\n");
             string userInput = HolidayType_StartScript();
 
             return userInput;
         }
-
 
         private string HolidayType_StartScript()
         {
@@ -75,11 +86,8 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
                     AppStart.Main();
                     break;
                 default:
-                    _shared.Shared_Divider();
-                    Console.WriteLine("I'm sorry, that is not a valid holiday type");
-                    Console.WriteLine("\n");
-                    HolidayType_StartScript();
-                    break;
+;
+                    throw new Exception();
             }
         }
         private List<Destination> GetDestinationsByType(List<Destination> list, string type)

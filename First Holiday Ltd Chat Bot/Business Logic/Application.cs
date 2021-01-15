@@ -5,7 +5,7 @@ using First_Holiday_Ltd_Chat_Bot.Interfaces;
 
 namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
 {
-    class Application : IApplicationStart
+    class Application
     {
         private readonly IHolidayType _holidayType;
         private readonly IShared _shared;
@@ -29,16 +29,31 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
             _resultsPage = resultsPage;
         }
 
+        // Declare variables
+        private List<Destination> destinations = new List<Destination>();
+        private int partySize;
+
         public void StartApplication()
         {
             // Begin Application
             Application_StartApplication();
 
             // Get list of destinations
-            List<Destination> destinations = Application_GetDestinationByHolidayType();
+            destinations = Application_GetDestinationByHolidayType();
+            while (destinations.Count == 0)
+            {
+                destinations = Application_GetDestinationByHolidayType();
+            }
 
             // Get party size
-            int partySize = Application_GetPartySizeFromUser();
+            Console.WriteLine("Thank you!");
+            Console.WriteLine("\n");
+
+            partySize = Application_GetPartySizeFromUser();
+            while (partySize == 0)
+            {
+                partySize = Application_GetPartySizeFromUser();
+            }
 
             // Get min and max budgets
             Budget userBudget = Application_GetBudgetFromUser();
@@ -63,6 +78,9 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
         private List<Destination> Application_GetDestinationByHolidayType()
         {
             Console.Clear();
+            Console.WriteLine("First things first, what kind of holiday are you looking for?");
+            Console.WriteLine("\n");
+
             List<Destination> destinations = _holidayType.HolidayType_ReturnDestinations();
 
             _shared.Shared_Divider();
@@ -72,23 +90,22 @@ namespace First_Holiday_Ltd_Chat_Bot.Business_Logic
 
         private int Application_GetPartySizeFromUser()
         {
-            int partySize = _partyNumberPage.PartyNumber_ReturnPartyNumber();
+            int userInput = _partyNumberPage.PartyNumber_ReturnPartyNumber();
 
-            _shared.Shared_Divider();
+            //_shared.Shared_Divider();
 
-            return partySize;
+            return userInput;
         }
 
         private Budget Application_GetBudgetFromUser()
         {
+            _shared.Shared_Divider();
             Console.WriteLine("Now, we need to talk money!");
             Console.WriteLine("\n");
 
             Budget newBudget = _budgetPage.GetBudgetFromUser();
             return newBudget;
         }
-
-
 
         private List<Destination> Application_FilterDestinations(List<Destination> destinations, int partySize,
             Budget budget)

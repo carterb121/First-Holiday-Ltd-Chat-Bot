@@ -2,8 +2,6 @@
 {
     public interface IShared
     {
-        public void Shared_QuitApplication();
-
         public void Shared_StartSearchOrQuit();
 
         public void Shared_Divider();

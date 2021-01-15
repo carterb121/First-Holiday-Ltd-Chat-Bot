@@ -1,5 +1,4 @@
-﻿
-using First_Holiday_Ltd_Chat_Bot.dto;
+﻿using First_Holiday_Ltd_Chat_Bot.dto;
 
 namespace First_Holiday_Ltd_Chat_Bot.Interfaces
 {
